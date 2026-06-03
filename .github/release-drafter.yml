@@ -1,0 +1,64 @@
+# Release Drafter configuration.
+# This file controls how release notes are generated and how the next version is calculated.
+# Docs: https://github.com/release-drafter/release-drafter
+
+# The name and tag for the draft release
+name-template: "v$RESOLVED_VERSION"
+tag-template: "v$RESOLVED_VERSION"
+
+# Categories shown in the draft release notes.
+# A PR is placed in the first category whose label matches.
+categories:
+  - title: "🚀 Features"
+    labels: [feature, enhancement]
+  - title: "🐛 Bug Fixes"
+    labels: [fix, bugfix, bug]
+  - title: "🧰 Maintenance"
+    labels: [chore, maintenance, refactor]
+  - title: "📚 Documentation"
+    labels: [docs, documentation]
+  - title: "⬆️ Dependencies"
+    labels: [dependencies]
+
+# How to calculate the next version from PR labels.
+# The highest-priority matching label wins.
+version-resolver:
+  major:
+    labels: [major, breaking-change]
+  minor:
+    labels: [minor, feature, enhancement]
+  patch:
+    labels: [patch, fix, bugfix, bug, chore, maintenance, refactor, docs, documentation, dependencies]
+  default: patch
+
+# How each PR is listed in the release notes
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: '\<*_&'
+
+# The release notes template
+template: |
+  ## What's Changed
+
+  $CHANGES
+
+  **Full Changelog:** https://github.com/<OWNER>/<PROJECT_NAME>/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+
+# Auto-label PRs by which files were changed (same logic as labeler.yml)
+autolabeler:
+  - label: docs
+    files:
+      - "**/*.md"
+      - "docs/**"
+  - label: ci
+    files:
+      - ".github/**"
+  - label: chore
+    files:
+      - ".editorconfig"
+      - ".gitignore"
+      - ".gitattributes"
+      - "Makefile"
+      - "scripts/**"
+  - label: dependencies
+    branch:
+      - "/^dependabot\\/.+/"

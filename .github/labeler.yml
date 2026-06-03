@@ -1,0 +1,27 @@
+# actions/labeler configuration.
+# Automatically adds labels to PRs based on which files were changed.
+# Docs: https://github.com/actions/labeler
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "docs/**"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+chore:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".editorconfig"
+          - ".gitignore"
+          - ".gitattributes"
+          - ".markdownlint.yaml"
+          - ".yamllint.yaml"
+          - "Makefile"
+          - "scripts/**"
+          - ".devcontainer/**"
+          - ".vscode/**"
