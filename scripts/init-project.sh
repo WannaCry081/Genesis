@@ -71,6 +71,8 @@ rmdir scripts 2>/dev/null || true
 rm -f Makefile
 rm -f README.md
 rm -f .gitignore
+rm -f index.html
+rm -f favicon.svg
 
 # Detach from template history
 rm -rf .git
