@@ -69,10 +69,24 @@ find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.js
 rm -f scripts/init-project.sh
 rmdir scripts 2>/dev/null || true
 rm -f Makefile
+rm -f README.md
+rm -f .gitignore
+
+# Detach from template history
+rm -rf .git
+
+# Rename the project directory to the project name
+CURRENT_DIR="$(pwd)"
+PARENT_DIR="$(dirname "$CURRENT_DIR")"
+NEW_DIR="$PARENT_DIR/$PROJECT_NAME"
+if [ "$CURRENT_DIR" != "$NEW_DIR" ]; then
+  mv "$CURRENT_DIR" "$NEW_DIR"
+  echo "  renamed directory → $PROJECT_NAME"
+fi
 
 echo ""
-echo "Done. Commit your changes:"
+echo "Done. Add your own README.md and .gitignore, then:"
 echo ""
-echo "  git add -A && git commit -m 'chore: initialize from template'"
-echo "  git push"
+echo "  cd ../$PROJECT_NAME"
+echo "  git init && git add -A && git commit -m 'chore: initialize project'"
 echo ""
