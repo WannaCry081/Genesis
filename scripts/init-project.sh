@@ -2,35 +2,48 @@
 # Usage: sh scripts/init-project.sh
 set -e
 
-echo "Repository Template — Init"
-echo "==========================="
-echo "Replaces all <PLACEHOLDER> tokens. Press Ctrl+C to cancel."
+echo ""
+echo "Initialize project from template"
+echo "---------------------------------"
+echo "Fills in your project details across all template files."
+echo "Press Ctrl+C to cancel."
 echo ""
 
-prompt() {
-  printf "%s [%s]: " "$1" "$2"
+ask() {
+  if [ -n "$2" ]; then
+    printf "%s [%s]: " "$1" "$2" >&2
+  else
+    printf "%s: " "$1" >&2
+  fi
   read -r val
   printf '%s' "${val:-$2}"
 }
 
-PROJECT_NAME=$(prompt "Project name"        "my-project")
-DESCRIPTION=$(prompt  "One-line description" "A short description of this project")
-OWNER=$(prompt        "GitHub username/org"  "$(git config user.name 2>/dev/null || echo 'your-username')")
-COPYRIGHT=$(prompt    "Copyright holder"     "$OWNER")
+_github_username() {
+  git remote get-url origin 2>/dev/null \
+    | sed 's|.*github\.com[:/]\([^/]*\).*|\1|' \
+    | grep -v "github\.com" \
+    || echo "your-username"
+}
+
+PROJECT_NAME=$(ask    "Project name"                    "my-project")
+DESCRIPTION=$(ask     "Short description"               "")
+OWNER=$(ask           "GitHub username or organization" "$(_github_username)")
+COPYRIGHT=$(ask       "Copyright holder"                "your-name")
 YEAR=$(date +%Y)
-CONTACT_EMAIL=$(prompt   "Code of Conduct email" "conduct@example.com")
-SECURITY_CONTACT=$(prompt "Security contact"      "security@example.com")
+CONTACT_EMAIL=$(ask   "Code of Conduct email"           "conduct@example.com")
+SECURITY_CONTACT=$(ask "Security contact email"         "security@example.com")
 
 echo ""
-echo "  <PROJECT_NAME>     → $PROJECT_NAME"
-echo "  <DESCRIPTION>      → $DESCRIPTION"
-echo "  <OWNER>            → $OWNER"
-echo "  <COPYRIGHT_HOLDER> → $COPYRIGHT"
-echo "  <YEAR>             → $YEAR"
-echo "  <CONTACT_EMAIL>    → $CONTACT_EMAIL"
-echo "  <SECURITY_CONTACT> → $SECURITY_CONTACT"
+printf "  %-20s : %s\n" "Project name"     "$PROJECT_NAME"
+printf "  %-20s : %s\n" "Description"      "$DESCRIPTION"
+printf "  %-20s : %s\n" "GitHub owner"     "$OWNER"
+printf "  %-20s : %s\n" "Copyright holder" "$COPYRIGHT"
+printf "  %-20s : %s\n" "Year"             "$YEAR"
+printf "  %-20s : %s\n" "CoC email"        "$CONTACT_EMAIL"
+printf "  %-20s : %s\n" "Security email"   "$SECURITY_CONTACT"
 echo ""
-printf "Proceed? (y/N): "
+printf "Apply these changes? [y/N]: "
 read -r confirm
 [ "$confirm" = "y" ] || [ "$confirm" = "Y" ] || { echo "Cancelled."; exit 0; }
 
@@ -39,7 +52,7 @@ find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.js
   | grep -v ".git/" | grep -v "node_modules/" \
   | while read -r file; do
       if grep -q "<PROJECT_NAME>\|<DESCRIPTION>\|<OWNER>\|<COPYRIGHT_HOLDER>\|<YEAR>\|<CONTACT_EMAIL>\|<SECURITY_CONTACT>" "$file" 2>/dev/null; then
-        echo "  updating $file"
+        echo "  updated $file"
         sed -i.bak \
           -e "s|<PROJECT_NAME>|$PROJECT_NAME|g" \
           -e "s|<DESCRIPTION>|$DESCRIPTION|g" \
@@ -55,8 +68,11 @@ find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.js
 
 rm -f scripts/init-project.sh
 rmdir scripts 2>/dev/null || true
+rm -f Makefile
 
 echo ""
-echo "Done. Next steps:"
+echo "Done. Commit your changes:"
+echo ""
 echo "  git add -A && git commit -m 'chore: initialize from template'"
 echo "  git push"
+echo ""
