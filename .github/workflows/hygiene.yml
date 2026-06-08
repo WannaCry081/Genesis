@@ -2,7 +2,7 @@ name: Repo Hygiene
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
   pull_request:
 
 # Cancel in-progress runs for the same branch when a new push comes in
