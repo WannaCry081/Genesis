@@ -1,6 +1,6 @@
 # Genesis
 
-> A batteries-included GitHub repository template — community files, CI/CD workflows, and a one-command setup script.
+A batteries-included GitHub repository template — community files, CI/CD workflows, and a one-command setup script.
 
 ## What's Included
 
