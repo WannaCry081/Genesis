@@ -2,7 +2,7 @@
 # Uncomment the platforms you use. Full list:
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
 
-# github: your-username
+github: <OWNER>
 # patreon: your-username
 # ko_fi: your-username
 # open_collective: your-project

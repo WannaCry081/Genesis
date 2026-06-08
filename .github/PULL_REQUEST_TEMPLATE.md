@@ -1,23 +1,30 @@
-## What does this PR do?
+## Summary
 
 <!-- Briefly describe the change and why you made it. -->
 
-## Type of change
+## What changed
 
-<!-- Add the label that matches your change. Release Drafter uses it to auto-generate release notes and calculate the version bump. -->
+- feat(auth): add OAuth2 login support
+- fix(api): resolve null pointer on empty response
+- chore(deps): bump eslint to v9
 
-- [ ] `feature` / `enhancement` — new feature (minor version bump)
-- [ ] `fix` / `bug` — bug fix (patch bump)
-- [ ] `chore` / `maintenance` — cleanup, refactor, tooling (patch bump)
-- [ ] `docs` — documentation only (patch bump)
-- [ ] `major` / `breaking-change` — breaks existing behavior (major bump)
+## Screenshots / Videos
 
-## Testing
+<!-- Attach screenshots or a short screen recording if there are visual changes. -->
 
-<!-- How did you test this? Add screenshots, commands, or logs if helpful. -->
+## How to test
+
+<!-- How did you verify this works? Add commands, steps, or logs if helpful. -->
+
+- [ ] Step 1: Check out this branch and run `npm install`
+- [ ] Step 2: Start the dev server with `npm run dev`
+- [ ] Step 3: Navigate to the affected page/feature and confirm the expected behavior
+
+## Notes
+
+<!-- Anything reviewers should know — caveats, follow-ups, related issues. -->
 
 ## Checklist
 
 - [ ] I read [CONTRIBUTING.md](../CONTRIBUTING.md)
-- [ ] I added a label matching my change type (see table above)
 - [ ] I updated docs if my change affects how the project is used
