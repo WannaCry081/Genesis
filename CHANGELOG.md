@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Start a new empty `[Unreleased]` section for the next batch of changes.
 - GitHub Releases (powered by Release Drafter) will also show categorized release notes automatically.
 
+## [0.3.0](https://github.com/WannaCry081/Genesis/compare/v0.2.0...v0.3.0) (2026-06-09)
+
+
+### Features
+
+* add language and package manager picker ([49c9ee5](https://github.com/WannaCry081/Genesis/commit/49c9ee54a530da4ce6040a541370eea764212e1e))
+* add language-specific init templates ([1a5909e](https://github.com/WannaCry081/Genesis/commit/1a5909e2f4a2376809583e23dedf79eac7068327))
+
 ## [0.2.0](https://github.com/WannaCry081/Genesis/compare/v0.1.0...v0.2.0) (2026-06-09)
 
 
