@@ -66,6 +66,31 @@ find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.js
       fi
     done
 
+# Reset release-please files so the new project starts from a clean slate,
+# not from whatever version/changelog the template repo has accumulated.
+printf '{\n  ".": "0.0.0"\n}\n' > .release-please-manifest.json
+echo "  reset .release-please-manifest.json → 0.0.0"
+
+cat > CHANGELOG.md << 'EOF'
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+EOF
+echo "  reset CHANGELOG.md"
+
 rm -f scripts/init-project.sh
 rmdir scripts 2>/dev/null || true
 rm -f Makefile
