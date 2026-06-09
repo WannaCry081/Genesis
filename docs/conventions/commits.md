@@ -28,6 +28,16 @@ chore: upgrade dependencies
 ci: add lint step to pull request workflow
 ```
 
+## Version impact
+
+Commit types determine the version bump in the next release (via release-please):
+
+| Prefix | Version bump |
+| ------ | ------------ |
+| `feat!:` or `BREAKING CHANGE:` in the footer | major (e.g. 1.0.0 → 2.0.0) |
+| `feat:` | minor (e.g. 1.0.0 → 1.1.0) |
+| `fix:`, `chore:`, `docs:`, `test:`, `ci:`, `refactor:` | patch (e.g. 1.0.0 → 1.0.1) |
+
 ## Rules
 
 - Use the imperative mood: "add", not "added" or "adds".
