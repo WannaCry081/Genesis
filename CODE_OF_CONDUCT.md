@@ -20,7 +20,7 @@ We are committed to making participation in this project a harassment-free exper
 
 ## Reporting
 
-If you experience or witness unacceptable behavior, please report it to **<CONTACT_EMAIL>**.
+If you experience or witness unacceptable behavior, please report it to **[<CONTACT_EMAIL>](mailto:<CONTACT_EMAIL>).**.
 
 All reports are reviewed promptly and handled with discretion.
 

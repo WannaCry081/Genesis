@@ -10,15 +10,11 @@ We follow [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
 ## Releasing
 
-1. Ensure `main` is in a releasable state.
-2. Push a tag matching the version:
+Releases are fully automated via [release-please](https://github.com/googleapis/release-please-action) — do not push tags manually.
 
-   ```bash
-   git tag v1.2.3
-   git push origin v1.2.3
-   ```
-
-3. CI publishes the GitHub Release automatically.
+1. Merge commits to `main` with conventional commit prefixes.
+2. release-please opens (or updates) a Release PR with the bumped version and changelog.
+3. When ready to ship, merge the Release PR — CI creates the tag and GitHub Release automatically.
 
 ## Pre-releases
 
