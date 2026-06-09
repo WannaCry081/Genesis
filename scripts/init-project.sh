@@ -34,6 +34,17 @@ YEAR=$(date +%Y)
 CONTACT_EMAIL=$(ask   "Code of Conduct email"           "conduct@example.com")
 SECURITY_CONTACT=$(ask "Security contact email"         "security@example.com")
 
+LANGUAGE=$(ask "Language (python/node)" "node")
+LANGUAGE=$(printf '%s' "$LANGUAGE" | tr '[:upper:]' '[:lower:]')
+case "$LANGUAGE" in python|node) ;; *) LANGUAGE="node" ;; esac
+
+PKG_MGR=""
+if [ "$LANGUAGE" = "node" ]; then
+  PKG_MGR=$(ask "Package manager (npm/pnpm/yarn)" "pnpm")
+  PKG_MGR=$(printf '%s' "$PKG_MGR" | tr '[:upper:]' '[:lower:]')
+  case "$PKG_MGR" in npm|pnpm|yarn) ;; *) PKG_MGR="pnpm" ;; esac
+fi
+
 echo ""
 printf "  %-20s : %s\n" "Project name"     "$PROJECT_NAME"
 printf "  %-20s : %s\n" "Description"      "$DESCRIPTION"
@@ -42,12 +53,41 @@ printf "  %-20s : %s\n" "Copyright holder" "$COPYRIGHT"
 printf "  %-20s : %s\n" "Year"             "$YEAR"
 printf "  %-20s : %s\n" "CoC email"        "$CONTACT_EMAIL"
 printf "  %-20s : %s\n" "Security email"   "$SECURITY_CONTACT"
+printf "  %-20s : %s\n" "Language"         "$LANGUAGE"
+[ -n "$PKG_MGR" ] && printf "  %-20s : %s\n" "Package manager" "$PKG_MGR"
 echo ""
 printf "Apply these changes? [y/N]: "
 read -r confirm
 [ "$confirm" = "y" ] || [ "$confirm" = "Y" ] || { echo "Cancelled."; exit 0; }
 
 echo ""
+
+# Copy the language-specific templates into place before the placeholder
+# substitution loop runs, so any <PROJECT_NAME> tokens inside them are replaced.
+write_language_files() {
+  case "$LANGUAGE" in
+    python)
+      cp scripts/templates/ci.python.yml            .github/workflows/ci.yml
+      cp scripts/templates/dependabot.python.yml    .github/dependabot.yml
+      cp scripts/templates/devcontainer.python.json .devcontainer/devcontainer.json
+      cp scripts/templates/extensions.python.json   .vscode/extensions.json
+      ;;
+    node)
+      cp "scripts/templates/ci.node.$PKG_MGR.yml"  .github/workflows/ci.yml
+      cp scripts/templates/dependabot.node.yml      .github/dependabot.yml
+      cp scripts/templates/devcontainer.node.json   .devcontainer/devcontainer.json
+      cp scripts/templates/extensions.node.json     .vscode/extensions.json
+      ;;
+  esac
+
+  echo "  wrote .github/workflows/ci.yml ($LANGUAGE${PKG_MGR:+/$PKG_MGR})"
+  echo "  wrote .github/dependabot.yml"
+  echo "  wrote .devcontainer/devcontainer.json"
+  echo "  wrote .vscode/extensions.json"
+}
+
+write_language_files
+
 find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.json" -o -name "*.sh" -o -name "LICENSE" \) \
   | grep -v ".git/" | grep -v "node_modules/" \
   | while read -r file; do
@@ -91,8 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 EOF
 echo "  reset CHANGELOG.md"
 
-rm -f scripts/init-project.sh
-rmdir scripts 2>/dev/null || true
+rm -rf scripts/
 rm -f Makefile
 rm -f README.md
 rm -f .gitignore
