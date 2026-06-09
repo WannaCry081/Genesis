@@ -2,12 +2,12 @@
 
 ## Branch Names
 
-| Pattern | Purpose |
-|---|---|
-| `main` | Stable, always deployable |
-| `feat/<slug>` | New features |
-| `fix/<slug>` | Bug fixes |
-| `docs/<slug>` | Documentation |
+| Pattern        | Purpose                       |
+| -------------- | ----------------------------- |
+| `main`         | Stable, always deployable     |
+| `feat/<slug>`  | New features                  |
+| `fix/<slug>`   | Bug fixes                     |
+| `docs/<slug>`  | Documentation                 |
 | `chore/<slug>` | Maintenance, tooling, cleanup |
 
 Keep slugs short and descriptive: `feat/dark-mode`, `fix/null-pointer-login`.
