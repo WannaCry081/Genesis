@@ -69,7 +69,7 @@ CI defaults to `pnpm`. To switch, update [`.github/workflows/ci.yml`](.github/wo
 
 [`.github/workflows/release.yml`](.github/workflows/release.yml) uses [Release Please](https://github.com/googleapis/release-please-action) to automate changelogs and GitHub releases. Two things to configure:
 
-- **Release type** — change `release-type: node` in the workflow (and in [`release-please-config.json`](release-please-config.json)) to match your project (`python`, `go`, `simple`, etc.).
+- **Release type** — [`release-please-config.json`](release-please-config.json) defaults to `simple`, which works for any project and tracks the version in a `version.txt` file. Change it to a language-specific type if you want release-please to also bump your manifest file automatically (e.g. `node` → `package.json`, `python` → `pyproject.toml`, `go` → `go.mod`). Full list of supported types: [release-please docs](https://github.com/googleapis/release-please/blob/main/docs/customizing.md#release-type).
 - **Publish step** — the `publish` job contains commented-out blocks for npm, PyPI, and Docker. Uncomment the one that matches your project and add the required secret (`NPM_TOKEN`, `PYPI_API_TOKEN`, etc.) to your repository.
 
 ### Dependency Updates

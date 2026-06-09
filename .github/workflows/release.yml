@@ -25,7 +25,7 @@ jobs:
       #   feat:                    → minor  (1.0.0 → 1.1.0)
       #   fix: / chore: / etc.     → patch  (1.0.0 → 1.0.1)
       #
-      # Change release-type to match your project: node, python, go, simple, etc.
+      # Change release-type in release-please-config.json to match your project: node, python, go, simple, etc.
       # Docs: https://github.com/googleapis/release-please-action
       - uses: googleapis/release-please-action@v4
         id: release
